@@ -18,6 +18,7 @@ public class App {
     	Elements tableRows = parser.getRows(tableCols);    
     	Elements subjects = parser.getSubjects(tableRows);
     	
-    	parser.readSubjects(subjects);
+    	// parser.readSubjects(subjects);
+    	parser.writeSubjsIntoFile(subjects);
     }
 }

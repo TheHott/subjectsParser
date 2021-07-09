@@ -1,5 +1,6 @@
 package twentytwentyone.ParserConsole;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -56,6 +57,38 @@ public class Parser {
 					day=1;
 			}
 		}
+	}
+	
+	public void writeSubjsIntoFile(Elements subjs) {
+		int subjNum = 1;
+		int day = 1;
+		boolean weekIsOdd = true; // неделя нечетная?
+		
+		String fileName = "Subjects.txt";
+		String filePath = System.getProperty("user.dir");
+		
+		try(FileWriter writer = new FileWriter(fileName, false)) {
+			for (Element subj : subjs) {
+				if(weekIsOdd)
+					writer.write("Нечётная неделя, ");
+				else
+					writer.write("Чётная неделя, ");
+				writer.write("День недели №" + day + ", " + subjNum + "-я пара: " + subj.text() + "\n");
+				subjNum++;
+				if(subjNum==8) {
+					subjNum=1;
+					day++;
+					if(day==7) {
+						day=1;
+						weekIsOdd=!weekIsOdd;
+					}
+				}
+			}
+			System.out.println("Список записан в файл по пути " + filePath + "\\" + fileName );
+		}
+		catch(IOException ex){ // проверка ошибок
+            System.out.println(ex.getMessage());
+        } 
 	}
 	
 	
