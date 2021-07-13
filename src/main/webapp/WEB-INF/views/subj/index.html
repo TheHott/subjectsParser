@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title>Расписание занятий</title>
+</head>
+<body>
+<h1>Расписание занятий, parsed</h1>
+
+<div th:each="subject : ${subjects}">
+	<b th:if="${subject.getIndex()==1 && subject.getWeekDay().equals('Понедельник') && subject.isWeekOdd()==true}">Нечётная неделя</b>
+	<b th:if="${subject.getIndex()==1 && subject.getWeekDay().equals('Понедельник') && subject.isWeekOdd()==false}">Чётная неделя</b>
+	<p th:if="${!subject.getName().equals('') && !subject.getName().equals('_')}" 
+	th:text="${subject.getWeekDay() + ', ' + subject.getIndex() + '-я пара: ' + subject.getName() + '. Время пары: ' + subject.getTime()}"/>
+</div>
+
+<br/>
+<hr/>
+
+<div class="parse">
+	<form th:method="POST" th:action="@{/subj}">
+		<label for="name">Введите адрес расписания: </label>
+		<input type="text" name="link"/>
+		<br/>
+		<input type="submit" value="Parse!"/>
+	</form>
+	<form th:method="DELETE" th:action="@{/subj/all}">
+		<input type="submit" value="Удалить всё!"/>
+	</form>
+</div>
+
+</body>
+</html>
